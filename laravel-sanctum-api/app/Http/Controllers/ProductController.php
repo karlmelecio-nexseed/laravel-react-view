@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductResource;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -32,13 +33,23 @@ class ProductController extends Controller
         $product->description = $request->input('description');
         $product->price = $request->input('price');
         $product->point = $request->input('point');
-        $product->save(); 
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('public/images'); // Store the image in the "public/images" directory
+            $product->image_url = Storage::url($imagePath); // Set the image URL using the Storage facade
+        }
+        
+        $product->save();
 
         return response()->json([
             'status'=> 200,
             'message'=> 'Product Added Successfully',
+            'data' => $product, // Include the product data in the response
         ]);
     }
+
+    
 
     /**
      * Display the specified resource.
@@ -57,7 +68,9 @@ class ProductController extends Controller
         'description' => $product->description,
         'price' => $product->price,
         'point' => $product->point,
+        'image_url' => $product->image_url,
         'created_at' => $product->created_at,
+        'updated_at' => $product->updated_at,
         'updated_at' => $product->updated_at,
     ];
 

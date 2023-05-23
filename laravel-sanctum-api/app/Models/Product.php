@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use HasFactory;
     protected $fillable = [
         'name',
         'slug',
         'description',
         'price',
         'point',
+        'image_url', // Add this line for the image URL
     ];
 }

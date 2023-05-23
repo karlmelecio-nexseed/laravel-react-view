@@ -16,8 +16,16 @@ import {
   Typography,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'recharts';
-
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Legend,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
+import AccordionSection from './Accordion/AccordionSection';
 
 interface ProductProps {
   products: Array<{ id: number; name: string; description: string }>;
@@ -122,10 +130,15 @@ const Product = () => {
   }, []);
 
   const classes = useStyles();
+  const [accordionVisible, setAccordionVisible] = useState(false);
 
   const handleDelete = (productId: number) => {
     setModalOpen(true);
     setSelectedProductId(productId);
+  };
+
+  const toggleAccordion = () => {
+    setAccordionVisible(!accordionVisible);
   };
 
   const confirmDelete = () => {
@@ -156,12 +169,11 @@ const Product = () => {
     const colors = ['#8884d8', '#82ca9d', '#ffc658', '#ff7f50', '#00bcd4'];
     return data.map((_, index) => colors[index % colors.length]);
   };
-  
-  // Inside your component
- // Inside your component
-const colors = generateBarColors(products);
 
-  
+  // Inside your component
+  // Inside your component
+  const colors = generateBarColors(products);
+
   // Inside your component
   return (
     <Grid container spacing={3}>
@@ -171,15 +183,25 @@ const colors = generateBarColors(products);
             className={classes.header}
             title="Products Data"
             action={
-              <Link to={'add-product'}>
+              <React.Fragment>
+                <Link to={'add-product'}>
+                  <Button
+                    className={classes.addButton}
+                    variant="contained"
+                    color="secondary"
+                  >
+                    Add Product
+                  </Button>
+                </Link>
                 <Button
                   className={classes.addButton}
                   variant="contained"
-                  color="secondary"
+                  color="primary"
+                  onClick={toggleAccordion}
                 >
-                  Add Product
+                  Another Button
                 </Button>
-              </Link>
+              </React.Fragment>
             }
           />
           <TableContainer component={Paper} className={classes.tableContainer}>
@@ -266,16 +288,22 @@ const colors = generateBarColors(products);
 
       {/* Line Chart */}
       <Grid className={classes.chartContainer} item xs={12}>
-      <BarChart width={1000} height={300} data={products} layout="vertical">
-  <CartesianGrid strokeDasharray="3 3" />
-  <XAxis type="number" />
-  <YAxis dataKey="name" type="category" tick={{ fontSize: 12 }} width={100} />
-  <Tooltip />
-  <Legend />
-  <Bar dataKey="point" fill={colors} />
-</BarChart>
-
+        <BarChart width={1000} height={300} data={products} layout="vertical">
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis type="number" />
+          <YAxis
+            dataKey="name"
+            type="category"
+            tick={{ fontSize: 12 }}
+            width={100}
+          />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="point" fill={colors} />
+        </BarChart>
       </Grid>
+
+      {accordionVisible && <AccordionSection />}
     </Grid>
   );
 };

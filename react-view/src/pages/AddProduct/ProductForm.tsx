@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 interface IProps {
   handleInput: (e: ChangeEvent<HTMLInputElement>) => void;
   saveProduct: (e: FormEvent<HTMLFormElement>) => void;
+  handleImageInput: (e: ChangeEvent<HTMLInputElement>) => void;
   name: string;
   slug: string;
   description: string;
@@ -38,11 +39,12 @@ const useStyles = makeStyles((theme) => ({
 const ProductForm: React.FC<IProps> = ({
   handleInput,
   saveProduct,
+  handleImageInput,
   name,
   slug,
   description,
   price,
-  point,    
+  point,
 }) => {
   const classes = useStyles();
 
@@ -103,6 +105,10 @@ const ProductForm: React.FC<IProps> = ({
             className={classes.formField}
           />
         </Grid>
+        <Grid item xs={12}>
+          <input type="file" accept="image/*" onChange={handleImageInput} />
+        </Grid>
+
         <Grid item container xs={12} spacing={5} justify="center">
           <Grid item>
             <Button
