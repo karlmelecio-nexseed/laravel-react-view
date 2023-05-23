@@ -3,6 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Accordion, AccordionSummary, Typography, AccordionDetails, IconButton } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import AccordionContent from '../../components/AccordionContent';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+
+const queryClient = new QueryClient();
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -61,7 +65,9 @@ const AccordionSection = () => {
                   <Typography>Accordion Title</Typography>
                 </AccordionSummary>
                 <AccordionDetails className={classes.accordionDetails}>
+                <QueryClientProvider client={queryClient}>
                   <AccordionContent />
+                </QueryClientProvider>  
                 </AccordionDetails>
               </Accordion>
             </Grid>

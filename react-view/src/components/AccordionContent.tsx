@@ -47,6 +47,7 @@ const AccordionContent = () => {
   const [imageUrl, setImageUrl] = useState('');
 
 
+
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
   };
@@ -96,13 +97,13 @@ const AccordionContent = () => {
       </div>
       <div className={classes.tabContent}>
         <TabPanel value={activeTab} index={0}>
-          <Tab1Content imageUrl={imageUrl} />
+          <Tab1Content imageUrl={imageUrl} productId={15} />
         </TabPanel>
         <TabPanel value={activeTab} index={1}>
-        <Tab2Content imageUrl={imageUrl} />
+        <Tab1Content imageUrl={imageUrl} productId={16} />
         </TabPanel>
         <TabPanel value={activeTab} index={2}>
-        <Tab3Content imageUrl={imageUrl} />
+        <Tab1Content imageUrl={imageUrl} productId={17} />
         </TabPanel>
         <TabPanel value={activeTab} index={3}>
           <Typography align="center">Content for Tab 4</Typography>
